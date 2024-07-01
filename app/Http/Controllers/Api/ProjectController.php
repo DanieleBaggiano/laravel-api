@@ -13,11 +13,19 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::all();
+        $perPage = $request->query('per_page', 1);
+        $projects = Project::paginate($perPage);
+
         return response()->json([
-            'results' => $projects,
+            'results' => $projects->items(),
+            'pagination' => [
+                'current_page' => $projects->currentPage(),
+                'total_pages' => $projects->lastPage(),
+                'per_page' => $projects->perPage(),
+                'total' => $projects->total(),
+            ],
             'success' => 1,
         ]);
     }
