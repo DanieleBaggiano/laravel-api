@@ -23,4 +23,7 @@ Route::get('/users', [UserController::class, 'index']);
 
 
 Route::get('/projects', [ProjectController::class, 'index']);
+
+
+Route::get('/projects/{id}', [ProjectController::class, 'show']);
  
